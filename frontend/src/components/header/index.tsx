@@ -9,9 +9,9 @@ import { useSidebar } from '@/components/ui/sidebar';
 import ApiKeys from './ApiKeys';
 import ChatProfiles from './ChatProfiles';
 import NewChatButton from './NewChat';
-import ReadmeButton from './Readme';
+// import ReadmeButton from './Readme';
 import SidebarTrigger from './SidebarTrigger';
-import { ThemeToggle } from './ThemeToggle';
+// import { ThemeToggle } from './ThemeToggle';
 import UserNav from './UserNav';
 
 const Header = memo(() => {
@@ -57,9 +57,9 @@ const Header = memo(() => {
 
       <div />
       <div className="flex items-center gap-1">
-        <ReadmeButton />
+        {/* <ReadmeButton /> */}
         <ApiKeys />
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
         <UserNav />
       </div>
     </div>

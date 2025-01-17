@@ -5,6 +5,7 @@ import { sideViewState, useAuth, useConfig } from '@chainlit/react-client';
 
 import ElementSideView from '@/components/ElementSideView';
 import LeftSidebar from '@/components/LeftSidebar';
+import RightSidebar from '@/components/RightSidebar';
 import { TaskList } from '@/components/Tasklist';
 import { Header } from '@/components/header';
 import { ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
@@ -49,14 +50,12 @@ const Page = ({ children }: Props) => {
 
   return (
     <SidebarProvider>
-      {historyEnabled ? (
-        <>
-          <LeftSidebar />
-          <SidebarInset className="max-h-svh">{content}</SidebarInset>
-        </>
-      ) : (
-        <div className="h-screen w-screen flex">{content}</div>
-      )}
+      {historyEnabled ? <LeftSidebar side="left" /> : null}
+
+      <RightSidebar variant="floating" side="right" collapsible="icon" />
+
+      {/* The main content is wrapped in SidebarInset */}
+      <SidebarInset className="">{content}</SidebarInset>
     </SidebarProvider>
   );
 };
