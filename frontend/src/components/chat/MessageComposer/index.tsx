@@ -1,3 +1,4 @@
+import { useRAG } from '@/contexts/RAGContext';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -36,6 +37,7 @@ export default function MessageComposer({
   onFileUploadError,
   setAutoScroll
 }: Props) {
+  const { ragIndex } = useRAG();
   const [value, setValue] = useState('');
   const setChatSettingsOpen = useSetRecoilState(chatSettingsOpenState);
   const [attachments, setAttachments] = useRecoilState(attachmentsState);
@@ -78,8 +80,13 @@ export default function MessageComposer({
         name: user?.identifier || 'User',
         type: 'user_message',
         output: msg,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        metadata: {
+          ragIndex: ragIndex // Include RAG index in metadata
+        }
       };
+
+      console.log('Message before sending:', message);
 
       const fileReferences = attachments
         ?.filter((a) => !!a.serverId)
@@ -88,7 +95,7 @@ export default function MessageComposer({
       setAutoScroll(true);
       sendMessage(message, fileReferences);
     },
-    [user, sendMessage]
+    [user, sendMessage, ragIndex]
   );
 
   const onReply = useCallback(
@@ -99,13 +106,17 @@ export default function MessageComposer({
         name: user?.identifier || 'User',
         type: 'user_message',
         output: msg,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        metadata: {
+          ragIndex: ragIndex // Include RAG index in metadata
+        }
       };
+      console.log('Reply before sending:', message);
 
       replyMessage(message);
       setAutoScroll(true);
     },
-    [user, replyMessage]
+    [user, replyMessage, ragIndex]
   );
 
   const submit = useCallback(() => {
