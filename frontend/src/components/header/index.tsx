@@ -45,6 +45,7 @@ const Header = memo(() => {
       </div>
 
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <RAGSettings />
         {audioConnection === 'on' ? (
           <AudioPresence
             type="server"
@@ -58,7 +59,6 @@ const Header = memo(() => {
 
       <div />
       <div className="flex items-center gap-1">
-        <RAGSettings />
         {/* <ReadmeButton /> */}
         <ApiKeys />
         <ThemeToggle />
